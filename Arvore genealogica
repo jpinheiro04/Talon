@@ -1,0 +1,54 @@
+% Fatos - Relações de pai e mãe
+pai(ivo, eva).
+pai(gil, rai).
+pai(gil, clo).
+pai(gil, ary).
+pai(rai, noe).
+pai(ary, gal).
+
+mae(ana, eva).
+mae(bia, rai).
+mae(bia, clo).
+mae(bia, ary).
+mae(eva, noe).
+mae(lia, gal).
+
+% Definições de gênero
+homem(ivo).
+homem(gil).
+homem(rai).
+homem(ary).
+homem(noe).
+
+mulher(ana).
+mulher(bia).
+mulher(eva).
+mulher(clo).
+mulher(lia).
+mulher(gal).
+
+% Regra para "gerou" (pai ou mãe de alguém)
+gerou(X, Y) :- pai(X, Y).
+gerou(X, Y) :- mae(X, Y).
+
+% Definição de filho e filha
+filho(X, Y) :- homem(X), gerou(Y, X).
+filha(X, Y) :- mulher(X), gerou(Y, X).
+
+% Definição de avô e avó
+avo(X, Y) :- pai(X, Z), gerou(Z, Y).
+avo(X, Y) :- mae(X, Z), gerou(Z, Y).
+
+% Definição de irmãos
+irmao(X, Y) :- pai(Z, X), pai(Z, Y), mae(W, X), mae(W, Y), X \= Y.
+
+% Definição de tio e tia
+tio(X, Y) :- homem(X), irmao(X, Z), gerou(Z, Y).
+tia(X, Y) :- mulher(X), irmao(X, Z), gerou(Z, Y).
+
+% Definição de primos
+primo(X, Y) :- homem(X), gerou(Z, X), gerou(W, Y), irmao(Z, W).
+prima(X, Y) :- mulher(X), gerou(Z, X), gerou(W, Y), irmao(Z, W).
+
+% Regra: Todo mundo que tem filhos é feliz
+feliz(X) :- gerou(X, ).
