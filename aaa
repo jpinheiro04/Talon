@@ -1,0 +1,96 @@
+Exercício 1: Países e Densidade Demográfica
+Base de dados:
+prolog
+Copiar
+Editar
+% pais(nome, area em km2, populacao em milhoes).
+pais(brasil, 9, 130).
+pais(china, 12, 1800).
+pais(eua, 9, 230).
+pais(india, 3, 450).
+Regra dens/2:
+prolog
+Copiar
+Editar
+dens(P, D) :- pais(P, A, Pop), D is Pop / A.
+Consultas:
+prolog
+Copiar
+Editar
+?- dens(P, D).        % Mostra densidade de todos
+?- pais(india, _, PI), pais(china, _, PC), PI > PC.
+🔹 Exercício 2: Funcionários e Dependentes
+Adições à base:
+prolog
+Copiar
+Editar
+% func(codigo, nome, salario)
+func(4, leo, 2500.35).
+func(5, clo, 1800.00).
+func(6, gil, 1100.00).
+
+% dep(codigo, nome)
+dep(4, lia).
+dep(4, noe).
+dep(5, eli).
+Consultas:
+a) Salário entre R$ 1500 e R$ 3000
+
+prolog
+Copiar
+Editar
+?- func(_, Nome, Sal), Sal >= 1500, Sal =< 3000.
+b) Sem dependentes e salário < R$ 1200
+
+prolog
+Copiar
+Editar
+?- func(C, Nome, Sal), Sal < 1200, not(dep(C, _)).
+c) Dependentes de quem ganha mais de R$ 1700
+
+prolog
+Copiar
+Editar
+?- func(C, _, Sal), Sal > 1700, dep(C, Dep).
+🔹 Exercício 3: Filmes
+Regras novas:
+prolog
+Copiar
+Editar
+% Filme é longo se tiver mais de 150 min
+filme_longo(T) :- filme(T, _, _, D), D > 150.
+
+% Filme lançamento (menos de 1 ano — vamos supor 2025)
+filme_lancamento(T) :- filme(T, _, Ano, _), Ano >= 2024.
+🔹 Exercício 4: Pessoas
+Base de dados:
+prolog
+Copiar
+Editar
+% pessoa(nome, sexo, idade, altura, peso)
+pessoa(ana, fem, 23, 1.55, 56.0).
+pessoa(bia, fem, 19, 1.71, 61.3).
+pessoa(ivo, masc, 22, 1.80, 70.5).
+pessoa(lia, fem, 17, 1.85, 57.3).
+pessoa(eva, fem, 28, 1.75, 68.7).
+pessoa(ary, masc, 25, 1.72, 68.9).
+Consultas:
+a) Mulheres com mais de 20 anos
+
+prolog
+Copiar
+Editar
+?- pessoa(Nome, fem, Idade, _, _), Idade > 20.
+b) Altura ≥ 1.70 e peso < 65
+
+prolog
+Copiar
+Editar
+?- pessoa(Nome, _, _, Altura, Peso), Altura >= 1.70, Peso < 65.
+c) Possíveis casais (homem mais alto que mulher)
+
+prolog
+Copiar
+Editar
+?- pessoa(H, masc, _, AltH, _), pessoa(M, fem, _, AltM, _), AltH > AltM.
+Se quiser, posso te mandar tudo isso num arquivo .pl organizadinho pra você testar no SWI-Prolog. Quer?
